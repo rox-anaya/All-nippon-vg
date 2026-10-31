@@ -11,17 +11,62 @@ import './globals.css';
 import SiteChrome from '../components/SiteChrome';
 import { getSettings } from '../lib/data';
 
-// Fonts the visitor can choose in Settings. Each one is available as a CSS variable.
-const fontWeights = ['400', '500', '600', '700'];
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap', weight: fontWeights });
-const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope', display: 'swap', weight: fontWeights });
-const poppins = Poppins({ subsets: ['latin'], variable: '--font-poppins', display: 'swap', weight: fontWeights });
-const montserrat = Montserrat({ subsets: ['latin'], variable: '--font-montserrat', display: 'swap', weight: fontWeights });
-const roboto = Roboto({ subsets: ['latin'], variable: '--font-roboto', display: 'swap', weight: fontWeights });
-const nunito = Nunito_Sans({ subsets: ['latin'], variable: '--font-nunito', display: 'swap', weight: fontWeights });
+// Fonts the visitor can choose in Settings. Each one is exposed as a CSS variable.
+// Next.js requires every font option to be written as a plain literal, so the weights are
+// written out in each loader instead of being shared through a variable.
+// Weights used: 400, 500, 600, 700. Each one was checked against Google Fonts:
+//   Inter, Manrope, Montserrat, Nunito Sans: variable fonts, so all four weights exist.
+//   Poppins: static weights 400, 500, 600, 700 all exist.
+//   Roboto: static weights are 100, 300, 400, 500, 700, 900. There is NO 600, so only 400, 500, 700 are used.
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
+
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  variable: '--font-poppins',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  variable: '--font-roboto',
+  display: 'swap',
+  weight: ['400', '500', '700'],
+});
+
+const nunito = Nunito_Sans({
+  subsets: ['latin'],
+  variable: '--font-nunito',
+  display: 'swap',
+  weight: ['400', '500', '600', '700'],
+});
 
 // Cursive font for the "Rox" credit in the menu.
-const script = Dancing_Script({ subsets: ['latin'], variable: '--font-script', display: 'swap', weight: ['700'] });
+const script = Dancing_Script({
+  subsets: ['latin'],
+  variable: '--font-script',
+  display: 'swap',
+  weight: ['700'],
+});
 
 const FONT_VARIABLES = [inter, manrope, poppins, montserrat, roboto, nunito, script]
   .map((f) => f.variable)
@@ -31,7 +76,8 @@ const FONT_VARIABLES = [inter, manrope, poppins, montserrat, roboto, nunito, scr
 const EARLY_SCRIPT = `try{var d=document.documentElement;var t=localStorage.getItem('anvg-theme');if(t)d.dataset.theme=t;var f=localStorage.getItem('anvg-font');if(f)d.dataset.font=f;}catch(e){}`;
 
 // App icon, used when the site is installed to a phone home screen.
-const APP_ICON = 'https://res.cloudinary.com/dsfwafyc2/image/upload/v1792817398/file_0000000014488211bfa6f947add0e395_npjxai.png';
+const APP_ICON =
+  'https://res.cloudinary.com/dsfwafyc2/image/upload/v1792817398/file_0000000014488211bfa6f947add0e395_npjxai.png';
 
 export const metadata = {
   title: 'All Nippon Virtual Group',
