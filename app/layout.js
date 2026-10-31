@@ -1,23 +1,22 @@
-import {
-  Dancing_Script,
-  Inter,
-  Manrope,
-  Montserrat,
-  Nunito_Sans,
-  Poppins,
-  Roboto,
-} from 'next/font/google';
+import { Inter, Manrope, Montserrat, Poppins, Roboto } from 'next/font/google';
 import './globals.css';
 import SiteChrome from '../components/SiteChrome';
 import { getSettings } from '../lib/data';
 
-// Fonts the visitor can choose in Settings. Each one is exposed as a CSS variable.
-// Next.js requires every font option to be written as a plain literal, so the weights are
-// written out in each loader instead of being shared through a variable.
-// Weights used: 400, 500, 600, 700. Each one was checked against Google Fonts:
-//   Inter, Manrope, Montserrat, Nunito Sans: variable fonts, so all four weights exist.
-//   Poppins: static weights 400, 500, 600, 700 all exist.
-//   Roboto: static weights are 100, 300, 400, 500, 700, 900. There is NO 600, so only 400, 500, 700 are used.
+// ---------------------------------------------------------------------------
+// FONTS
+//
+// Inter, Manrope, Poppins, Montserrat, and Roboto are loaded with next/font/google.
+// Each weight is written as a plain literal inside its own loader (Next.js requirement).
+//
+// Two fonts are loaded differently, using a CSS link to Google Fonts:
+//   - Nunito Sans: next/font/google could not find its font data during the Vercel build
+//     ("Failed to find font override values for font Nunito Sans"), so it is loaded by CSS instead.
+//     It stays selectable in Settings.
+//   - Dancing Script (the cursive "Rox" credit): loaded the same way, so no build-time font
+//     check can fail on it.
+// ---------------------------------------------------------------------------
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
@@ -46,6 +45,7 @@ const montserrat = Montserrat({
   weight: ['400', '500', '600', '700'],
 });
 
+// Roboto's static weights are 100, 300, 400, 500, 700, 900. There is no 600, so it is not requested.
 const roboto = Roboto({
   subsets: ['latin'],
   variable: '--font-roboto',
@@ -53,22 +53,17 @@ const roboto = Roboto({
   weight: ['400', '500', '700'],
 });
 
-const nunito = Nunito_Sans({
-  subsets: ['latin'],
-  variable: '--font-nunito',
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-});
+// CSS variables for the fonts loaded by link. These names must match the Settings page.
+const CSS_FONT_VARIABLES = {
+  '--font-nunito': "'Nunito Sans', system-ui, sans-serif",
+  '--font-script': "'Dancing Script', cursive",
+};
 
-// Cursive font for the "Rox" credit in the menu.
-const script = Dancing_Script({
-  subsets: ['latin'],
-  variable: '--font-script',
-  display: 'swap',
-  weight: ['700'],
-});
+// Google Fonts stylesheet for the two link-loaded fonts.
+const GOOGLE_FONTS_HREF =
+  'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito+Sans:wght@400;500;600;700&display=swap';
 
-const FONT_VARIABLES = [inter, manrope, poppins, montserrat, roboto, nunito, script]
+const FONT_CLASSNAMES = [inter, manrope, poppins, montserrat, roboto]
   .map((f) => f.variable)
   .join(' ');
 
@@ -98,8 +93,16 @@ export const dynamic = 'force-dynamic';
 export default async function RootLayout({ children }) {
   const [site, voice] = await Promise.all([getSettings('site'), getSettings('voice')]);
   return (
-    <html lang="en" className={FONT_VARIABLES} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={FONT_CLASSNAMES}
+      style={CSS_FONT_VARIABLES}
+      suppressHydrationWarning
+    >
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href={GOOGLE_FONTS_HREF} />
         <script dangerouslySetInnerHTML={{ __html: EARLY_SCRIPT }} />
       </head>
       <body>
