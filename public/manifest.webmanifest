@@ -1,0 +1,12 @@
+{
+  "name": "All Nippon Virtual Group",
+  "short_name": "ANVG",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1a33",
+  "theme_color": "#0b1a33",
+  "icons": [
+    { "src": "https://res.cloudinary.com/dsfwafyc2/image/upload/v1792817398/file_0000000014488211bfa6f947add0e395_npjxai.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "https://res.cloudinary.com/dsfwafyc2/image/upload/v1792817398/file_0000000014488211bfa6f947add0e395_npjxai.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
